@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cssl.mapper.VoteItemMapper">
+    <!--根据主题id查询投票-->
+    <select id="findItemBySid" parameterType="Integer" resultType="VoteItem">
+        select * from vote_item where vs_id=#{sid}
+    </select>
+    <!--新增投票记录-->
+    <insert id="addItem" parameterType="Integer">
+        insert into vote_item(vu_user_id, vs_id, vo_id) value(#{uid},#{sid},#{oid});
+    </insert>
+</mapper>

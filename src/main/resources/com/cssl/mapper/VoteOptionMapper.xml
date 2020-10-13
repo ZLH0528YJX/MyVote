@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cssl.mapper.VoteOptionMapper">
+    <!--获取该投票的选项项集合-->
+    <select id="findOptionBySid" parameterType="Integer" resultType="VoteOption">
+        select * from vote_option where vs_id=#{sid}
+    </select>
+</mapper>

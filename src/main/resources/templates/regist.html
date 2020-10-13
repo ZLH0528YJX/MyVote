@@ -1,0 +1,100 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<HTML
+        xmlns="http://www.w3.org/1999/xhtml">
+<HEAD>
+    <META content="IE=11.0000"
+          http-equiv="X-UA-Compatible">
+    <META http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <TITLE>注 册</TITLE>
+    <LINK href="css/style.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="js/jquery-1.8.2.min.js"></script>
+    <script type="text/javascript">
+        //提交检查
+        function check() {
+            var issub = false;
+            var name = $("#userName").val();
+            var pwd = $("#password").val();
+            var pwd2 = $("#repass").val();
+            if (name != null && name != "") {
+                if(pwd!=null && pwd!=""){
+                    if(pwd2!=null && pwd2!=""){
+                        issub=true;
+                    }else{
+                        $("#ts3").html("确认密码不能为空");
+                    }
+                }else{
+                    $("#ts3").html("密码不能为空");
+                }
+            } else {
+                $("#ts3").html("用户名不能为空");
+            }
+            return issub&&repasswd();
+        }
+
+        //确认密码
+        function repasswd() {
+            var pwd = $("#password").val();
+            var pwd2 = $("#repass").val();
+            if (pwd!=pwd2){
+                $("#ts2").html("请输入正确的确认密码");
+                return false;
+            }else{
+                $("#ts2").html("");
+                return true;
+            }
+        }
+        /*计时器清除提示栏*/
+        var int = self.setInterval("clear()", 3000);
+        function clear() {
+            $("#ts3").html("");
+        };
+        //重名检查
+        function findUser(name) {
+            if (name != null && name != "") {
+                $.ajax({
+                    type: "post",
+                    async: false,
+                    url: "checkReName.action?name=" + name,
+                    success: function (data) {
+                        $("#ts1").html(data);
+                    }
+                });
+            }else{
+                $("#ts1").html("");
+            }
+        }
+    </script>
+    <META name="GENERATOR" content="MSHTML 11.00.10586.420">
+</HEAD>
+<BODY>
+<DIV class="wrap" id="header"><IMG src="images/logo.gif"></DIV>
+<DIV class="wrap" id="navbar">
+    <DIV class="search"><!--
+		<form method="get" action="index.html">
+			<input type="text" name="keywords" class="input-text" /><input type="submit" name="submit" class="input-button" value="" />
+		</form>
+	-->
+    </DIV>
+</DIV>
+<DIV class="box" id="register">
+    <H2>新用户注册</H2>
+    <DIV class="content">
+        <FORM action="regist.action" method="post" onsubmit="return check();" >
+            <DL>
+                <DT>用户名：</DT>
+                <DD><input name="userName" class="input-text" id="userName" onblur="findUser(this.value)"
+                           type="text"/>&nbsp;<span id="ts1"></span></DD>
+                <DT>密码：</DT>
+                <DD><input name="password" class="input-text" id="password" type="password"/></DD>
+                <DT>确认密码：</DT>
+                <DD><input name="confirmPassword" class="input-text" id="repass" type="password"/>&nbsp;<span id="ts2"></span></DD>
+                <DT></DT>
+                <DD><input name="submit" class="input-button" type="submit" value=""/> <span id="ts3"></span></DD>
+            </DL>
+        </FORM>
+    </DIV>
+</DIV>
+<DIV class="wrap" id="footer">北大青鸟 © 版权所有</DIV>
+</BODY>
+</HTML>
